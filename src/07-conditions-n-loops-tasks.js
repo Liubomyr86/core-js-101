@@ -235,7 +235,8 @@ function reverseString(str) {
  *   34143 => 34143
  */
 function reverseInteger(num) {
-  return num.toString().split('').reverse().join('');
+  const string = num.toString().split('').reverse().join('');
+  return Math.sign(num) * parseInt(string, 10);
 }
 
 /**

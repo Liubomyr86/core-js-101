@@ -183,8 +183,8 @@ function convertToUpperCase(str) {
  *   ],
  *   'info@gmail.com' => ['info@gmail.com']
  */
-function extractEmails(/* str */) {
-  throw new Error('Not implemented');
+function extractEmails(str) {
+  return str.split(';');
 }
 
 /**
@@ -210,8 +210,43 @@ function extractEmails(/* str */) {
  *             '└──────────┘\n'
  *
  */
-function getRectangleString(/* width, height */) {
-  throw new Error('Not implemented');
+function getRectangleString(width, height) {
+  const topLeftCorner = '\u250C';
+  const topRightCorner = '\u2510';
+  const horizontalBorder = '\u2500';
+  const verticalBorder = '\u2502';
+  const buttomLeftCorner = '\u2514';
+  const buttomRightCorner = '\u2518';
+  const whitespace = ' ';
+
+  let horizontalBorderWith = 0;
+  let verticalBorderWith = 0;
+
+  if (width - 2 > 0) {
+    horizontalBorderWith = width - 2;
+  }
+
+  if (height - 2 > 0) {
+    verticalBorderWith = height - 2;
+  }
+
+  const topBorder = `${
+    topLeftCorner
+    + horizontalBorder.repeat(horizontalBorderWith)
+    + topRightCorner
+  }\n`;
+
+  const buttomBorder = `${
+    buttomLeftCorner
+    + horizontalBorder.repeat(horizontalBorderWith)
+    + buttomRightCorner
+  }\n`;
+
+  const middleBorder = `${
+    verticalBorder + whitespace.repeat(horizontalBorderWith) + verticalBorder
+  }\n`;
+
+  return topBorder + middleBorder.repeat(verticalBorderWith) + buttomBorder;
 }
 
 /**
@@ -230,8 +265,34 @@ function getRectangleString(/* width, height */) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  const input = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+  const arr = str.split('');
+  let newStr = '';
+  for (let i = 0; i < arr.length; i += 1) {
+    const index = input.indexOf(arr[i]);
+
+    if (index < 0) {
+      newStr += arr[i];
+    }
+    if (index >= 0 && index < 13) {
+      newStr += input[index + 13];
+    }
+
+    if (index > 12 && index < 26) {
+      newStr += input[index - 13];
+    }
+
+    if (index > 25 && index < 39) {
+      newStr += input[index + 13];
+    }
+
+    if (index > 38 && index < 52) {
+      newStr += input[index - 13];
+    }
+  }
+
+  return newStr;
 }
 
 /**
@@ -247,8 +308,17 @@ function encodeToRot13(/* str */) {
  *   isString('test') => true
  *   isString(new String('test')) => true
  */
-function isString(/* value */) {
-  throw new Error('Not implemented');
+function isString(value) {
+  let val = value;
+  if (typeof val === 'object' && value !== null) {
+    val = val.valueOf();
+  }
+
+  if (typeof val === 'string') {
+    return true;
+  }
+
+  return false;
 }
 
 /**
